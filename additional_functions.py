@@ -41,7 +41,6 @@ def image_to_array(path,
         np.place(target_bp, target_bp == 255, 1)
 
         return target_bp.flatten(order='C')[np.newaxis]
-        # return target_bp.flatten(order='C')[np.newaxis]
     else:
-        print 'Failed to load file at: '
-        print path
+        print ('Failed to load file at: ')
+        print (path)
