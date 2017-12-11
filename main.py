@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 import additional_functions as src
 from os import listdir
@@ -71,11 +70,4 @@ for i in range(0, N):
 W = np.dot(W, 1/N)
 
 print W
-
-for i in range(vector_length):
-    for j in range(vector_length):
-        if W[i][j] != 0:
-            print 'stageB'
-            print W[i][j]
-            print '---------------'
 print '\n\n\n'
