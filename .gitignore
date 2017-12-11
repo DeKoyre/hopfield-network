@@ -106,3 +106,6 @@ Thumbs.db
 
 # ide
 .idea
+
+# Output Files
+output/
