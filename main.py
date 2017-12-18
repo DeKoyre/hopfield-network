@@ -11,7 +11,7 @@ print('\n\n\nHello!')
 # [===>--<==>--<==>--<==>--<==>    start of settings    <==>--<==>--<==>--<==>--<===]
 
 # chose one of the sets from 'train_sets' array
-train_set = train_sets[0]
+train_set = train_sets[1]
 
 # set background color in R,G,B style, where R,G and B are strings of 2 chars
 background_color = ['FF', 'FF', 'FF']
@@ -26,7 +26,7 @@ target_is_darker = True
 max_iterations = 20
 
 # is init
-is_init = False
+is_init = True
 
 # [===>--<==>--<==>--<==>--<==>     end of settings     <==>--<==>--<==>--<==>--<===]
 #
@@ -121,7 +121,7 @@ W = np.matrix(np.load('output/matrix/matrix.npy'))
 np.savetxt('output/matrix/matrix.txt', W, delimiter=', ', fmt='%s')
 print ('Weights matrix has loaded')
 
-v = src.image_to_array('input/4s.bmp',
+v = src.image_to_array('input/' + train_set + '/x.bmp',
                        background_color,
                        range_param,
                        target_is_darker)
@@ -150,7 +150,11 @@ while k < max_iterations and not is_result_found:
 
 if is_result_found:
     print('result')
-    src.cv2.imshow('123', np.reshape(y, (image_shape[0], image_shape[1])))
+    result = y.copy()
+    np.place(result, result == -1.0, 255)
+    np.place(result, result == 1.0, 0)
+
+    src.cv2.imshow('123', np.reshape(result, (image_shape[0], image_shape[1])))
     src.cv2.waitKey()
 else:
     print('no result')
