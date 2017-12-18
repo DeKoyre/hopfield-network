@@ -48,13 +48,13 @@ if src.isfile(path_to_train_samples + '.DS_Store'):
 def initialize_vectors():
     number_of_chars = 0
 
-    for index in range(0, len(train_samples_list)):
-        img_vector = src.image_to_array(path_to_train_samples + train_samples_list[index],
+    for i in range(0, len(train_samples_list)):
+        img_vector = src.image_to_array(path_to_train_samples + train_samples_list[i],
                                         background_color,
                                         range_param,
                                         target_is_darker)
 
-        filename = 'output/vectors/vector-' + train_samples_list[index][0]
+        filename = 'output/vectors/vector-' + train_samples_list[i][0]
         np.save(filename, img_vector)
 
         if number_of_chars == 0:
@@ -96,10 +96,6 @@ def train_network():
         weights_matrix += np.outer(x, x)
         print('Stage complete ' + str(i + 1) + '/' + str(n_vectors) + '\n')
 
-    # print(type(weights_matrix))
-    # print(weights_matrix)
-    # print(weights_matrix / 4)
-
     for i in range(0, n_elements):
         weights_matrix[i, i] = 0
 
@@ -125,11 +121,6 @@ W = np.matrix(np.load('output/matrix/matrix.npy'))
 np.savetxt('output/matrix/matrix.txt', W, delimiter=', ', fmt='%s')
 print ('Weights matrix has loaded')
 
-# x = src.image_to_array('input/7.bmp')
-# # print (hamming_distance(x, (W * x.T).T))
-# print(np.equal(x, (W * x.T).T))
-# # print(((W * x.T).T).shape)
-
 v = src.image_to_array('input/4s.bmp',
                        background_color,
                        range_param,
@@ -150,8 +141,8 @@ print('input loaded. Use network')
 while k < max_iterations and not is_result_found:
     k += 1
     y_next = W * y.copy()
-    for i in range(n_elements):
-        y_next[i, 0] = threshold(y_next[i, 0])
+    for index in range(n_elements):
+        y_next[index, 0] = threshold(y_next[index, 0])
     distance = hamming_distance(y, y_next)
     print(str(k) + ': ' + str(distance))
     is_result_found = distance == 0
