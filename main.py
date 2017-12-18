@@ -130,7 +130,7 @@ print ('Weights matrix has loaded')
 # print(np.equal(x, (W * x.T).T))
 # # print(((W * x.T).T).shape)
 
-v = src.image_to_array('input/1.bmp',
+v = src.image_to_array('input/4s.bmp',
                        background_color,
                        range_param,
                        target_is_darker)
@@ -144,20 +144,22 @@ def threshold(a):
 
 
 k = 0
-
-while True:
+y = v.T.copy()
+is_result_found = False
+print('input loaded. Use network')
+while k < max_iterations and not is_result_found:
     k += 1
-    y = v.T.copy()
     y_next = W * y.copy()
     for i in range(n_elements):
         y_next[i, 0] = threshold(y_next[i, 0])
     distance = hamming_distance(y, y_next)
+    print(str(k) + ': ' + str(distance))
     is_result_found = distance == 0
-    if k == max_iterations | is_result_found:
-        break
+    y = y_next
 
 if is_result_found:
-    print ('result')
-    # src.cv2.imshow('123', np.reshape(y, (image_shape[0], image_shape[1])))
+    print('result')
+    src.cv2.imshow('123', np.reshape(y, (image_shape[0], image_shape[1])))
+    src.cv2.waitKey()
 else:
     print('no result')
